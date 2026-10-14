@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Carbon Footprint Calculator</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #1a1a1a;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) { --bg: #1a1a1a; --fg: #f2f2f2; color-scheme: dark; }
+    }
+    :root[data-theme="dark"] { --bg: #1a1a1a; --fg: #f2f2f2; color-scheme: dark; }
+    html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+    body { background: var(--bg); color: var(--fg); font-family: system-ui, sans-serif; padding: 16px; max-width: 100%; }
+  </style>
+</head>
+<body>
+  <h2>Carbon Footprint Calculator</h2>
+  <label>Electricity Usage (kWh): <input type="number" id="electricity"></label><br><br>
+  <label>Fuel Usage (Liters): <input type="number" id="fuel"></label><br><br>
+  <label>Transport Distance (km): <input type="number" id="transport"></label><br><br>
+
+  <button onclick="calculateCarbonFootprint()">Calculate</button>
+  <button onclick="resetForm()">Reset</button>
+
+  <h3 id="result">Total Carbon Footprint: 0 kg CO2</h3>
+
+  <script>
+    function calculateCarbonFootprint() {
+      const elec = parseFloat(document.getElementById('electricity').value) || 0;
+      const fuel = parseFloat(document.getElementById('fuel').value) || 0;
+      const trans = parseFloat(document.getElementById('transport').value) || 0;
+
+      const total = (elec * 0.5) + (fuel * 2.53) + (trans * 0.5);
+      document.getElementById('result').innerText = `Total Carbon Footprint: ${total.toFixed(2)} kg CO2`;
+    }
+
+    function resetForm() {
+      document.getElementById('electricity').value = '';
+      document.getElementById('fuel').value = '';
+      document.getElementById('transport').value = '';
+      document.getElementById('result').innerText = 'Total Carbon Footprint: 0 kg CO2';
+      document.getElementById('electricity').focus();
+    }
+  </script>
+</body>
+</html>
